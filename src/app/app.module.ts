@@ -12,11 +12,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatInputModule } from '@angular/material/input';
 
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
 import { CanvasComponent } from './canvas/canvas.component';
+import { MatButtonModule } from '@angular/material/button'; 
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { CanvasComponent } from './canvas/canvas.component';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

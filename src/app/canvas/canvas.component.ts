@@ -1,37 +1,23 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import * as p5 from 'p5';
+import Population from "../algorhitms/genetic-alg/population"
 
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.scss']
 })
-export class CanvasComponent implements OnInit {
-
-  private sketch = function(p) {
-    let x = 100;
-    let y = 100;
-  
-    p.setup = function() {
-      console.log("Calling setup");
-      p.createCanvas(700, 410);
-    };
-  
-    p.draw = function() {
-      console.log("Calling draw");
-      p.background(0);
-      p.fill(255);
-      p.rect(x, y, 50, 50);
-    };
-  };
-
-  private myp5;
-
+export class CanvasComponent implements AfterViewInit {
+  @Input() sketch
   constructor() {
   }
 
-  ngOnInit() {
-    this.myp5 = new p5(this.sketch);
+  ngAfterViewInit(): void {
+    let canvasW = document.getElementById("p5sketch").offsetWidth;
+    let population = new Population(20, 0.1);
+    population.setCanvasSize(canvasW, 300);
+    console.log(population);
+    new p5(population.sketch.bind(population), document.getElementById("p5sketch"));
+    population.run();
   }
-  
 }

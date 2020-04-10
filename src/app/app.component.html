@@ -1,19 +1,18 @@
-<!--<mat-sidenav-container>
+<mat-sidenav-container>
   <mat-sidenav #sidenav role="navigation">
     <app-sidenav (sidenavClose)="sidenav.close()"></app-sidenav>
   </mat-sidenav>
   <mat-sidenav-content fxLayout="column">
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
     <div fxLayout="column" fxLayoutAlign="none center">
-      <main> 
+      <main [id]="mainId"> 
           <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec vitae arcu. Nullam eget nisl. In enim a arcu imperdiet malesuada. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Fusce consectetuer risus a nunc. Integer lacinia. Etiam neque. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Mauris suscipit, ligula sit amet pharetra semper, nibh ante cursus purus, vel sagittis velit mauris vel metus. Nunc tincidunt ante vitae massa. Maecenas libero. Mauris elementum mauris vitae tortor. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Vivamus ac leo pretium faucibus. Nunc dapibus tortor vel mi dapibus sollicitudin. Praesent in mauris eu tortor porttitor accumsan. Etiam egestas wisi a erat. Aliquam ornare wisi eu metus.</p>
 
           <p>Etiam commodo dui eget wisi. Nunc tincidunt ante vitae massa. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? In enim a arcu imperdiet malesuada. Etiam bibendum elit eget erat. In enim a arcu imperdiet malesuada. Nam quis nulla. Phasellus faucibus molestie nisl. Quisque tincidunt scelerisque libero. Praesent in mauris eu tortor porttitor accumsan. Nulla est. Nulla non lectus sed nisl molestie malesuada. Fusce wisi.</p>
+          <app-canvas></app-canvas>
       </main>
       <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>
   </mat-sidenav-content>
-</mat-sidenav-container>-->
-
-<app-canvas></app-canvas>
+</mat-sidenav-container>
