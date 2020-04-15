@@ -18,7 +18,12 @@ import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
 import { CanvasComponent } from './canvas/canvas.component';
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
+import { CanvasNeuralNetsComponent } from './canvas-neural-nets/canvas-neural-nets.component';
+import { TextContainerComponent } from './text-container/text-container.component'; 
+import { HttpClientModule } from '@angular/common/http';
+import { GeneticAlgPageComponent } from './genetic-alg-page/genetic-alg-page.component';
+import { NeuralNetPageComponent } from './neural-net-page/neural-net-page.component';
 
 
 @NgModule({
@@ -27,9 +32,14 @@ import { MatButtonModule } from '@angular/material/button';
     HeaderComponent,
     SidenavComponent,
     FooterComponent,
-    CanvasComponent
+    CanvasComponent,
+    CanvasNeuralNetsComponent,
+    TextContainerComponent,
+    GeneticAlgPageComponent,
+    NeuralNetPageComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

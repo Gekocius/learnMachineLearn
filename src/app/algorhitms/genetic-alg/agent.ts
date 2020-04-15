@@ -17,12 +17,16 @@ export class Agent{
         return color;
     }
 
-    public breed(secondAgent : Agent) : Agent
+    public breed(secondAgent : Agent) : Array<Agent>
     {
-        let newGenes : string = this.genes.substring(0,3).concat(secondAgent.genes.substring(3));
-        let newAgent : Agent = new Agent(false);
-        newAgent.genes = newGenes;
-        return newAgent;
+        let newGenes1 : string = this.genes.substring(0,3).concat(secondAgent.genes.substring(3));
+        let newGenes2 : string = secondAgent.genes.substring(0,3).concat(this.genes.substring(3));
+        let newAgent1 : Agent = new Agent(false);
+        let newAgent2 : Agent = new Agent(false);
+
+        newAgent1.genes = newGenes1;
+        newAgent2.genes = newGenes2;
+        return [newAgent1, newAgent2];
     }
 
     public mutate()
@@ -31,11 +35,11 @@ export class Agent{
         let genesIndex: number = Math.floor(Math.random() * 6);
         let splittedGenes: Array<string> = this.genes.split("");
         let decimalNumber: number  = parseInt(splittedGenes[genesIndex], 16)
-        if (decimalNumber === 15 ) {
-            decimalNumber = 0
+        if (decimalNumber === 0 ) {
+            decimalNumber = 15
         }
         else{
-            decimalNumber++;
+            decimalNumber -= 1;
         }
         let hexString: string = decimalNumber.toString(16);
         splittedGenes[genesIndex] = hexString;

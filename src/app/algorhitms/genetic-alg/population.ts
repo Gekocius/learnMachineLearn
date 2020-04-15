@@ -3,10 +3,10 @@ import { Agent } from "./agent"
 
 export default class Population{
     private size: number;
-    private mutationRate: number;
     private agents : Array<Agent> = [];
     private canvasW;
     private canvasH;
+    public mutationRate: number;
     public generationCount : number = 0;
 
     constructor(size: number, mutationRate: number){
@@ -16,24 +16,31 @@ export default class Population{
         this.calculateFitness();
     }
 
-    public run() : void{
-        while (!this.targetAchieved()) {
+    public reset() : void{
+        this.agents = [];
+        this.seedPopulation();
+        this.calculateFitness();
+    }
 
-            let newAgent : Agent = this.agents[0].breed(this.agents[1]);
-            if (this.shouldMutate) {
-                newAgent.mutate();
+    public async run() {
+        while (!this.targetAchieved()) {       
+            let offsprings : Array<Agent> = this.agents[0].breed(this.agents[1]);
+            if (this.shouldMutate()) {
+                offsprings[0].mutate();
+                offsprings[1].mutate();
             }
-            this.agents[this.size - 1] = newAgent;
+            this.agents[this.size - 1] = offsprings[0];
+            this.agents[this.size - 2] = offsprings[1];
             this.calculateFitness();
             this.generationCount++;
-            if (this.generationCount % 100 === 0){
-                console.log(this.generationCount);
-            }
+
             if (this.generationCount === 5000) {
-                console.log(this.agents[1]);
+                this.generationCount = 0;
                 break;
             }
+            await this.sleep(100);
         }
+        console.log(this.generationCount);
     }
 
     public setCanvasSize(w: number, h: number) : void
@@ -74,6 +81,10 @@ export default class Population{
             p.resizeCanvas(this.canvasW, this.canvasH);
         }.bind(this)
     }
+
+    private sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    };
     
     private shouldMutate() : boolean{
         let randomChance: number = Math.round(Math.random() * 100);
@@ -98,8 +109,10 @@ export default class Population{
 
     private calculateFitness(): void {
         this.agents.forEach(agent => {
-            let hex : number = parseInt(agent.genes);
-            agent.fitness = hex;
+            let hexR : number = parseInt(agent.genes.substring(0,2), 16);
+            let hexG : number = parseInt(agent.genes.substring(2,4), 16);
+            let hexB : number = parseInt(agent.genes.substring(4), 16);
+            agent.fitness = hexR + hexG + hexB;
         });
         this.agents.sort((a1, a2) => {
             if (a1.fitness > a2.fitness) {
