@@ -1,3 +1,19 @@
-<div id="work-in-progress">
-    <p>WORK IN PROGRESS</p>
+<div fxFlex fxLayout="column">
+    <div fxFlex id="p5sketch"></div>
+    <div fxFlex class="control-panel">
+        <mat-form-field>
+            <mat-label>x<sub>1</sub></mat-label>
+            <input matInput min="0" max="1" step="1" type="number" (input)="updateX1($event)">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>x<sub>2</sub></mat-label>
+            <input matInput min="0" max="1" step="1" type="number" (input)="updateX2($event)">
+        </mat-form-field>
+        <button mat-raised-button (click)="predict()">Provést odhad</button>
+        <button mat-raised-button (click)="trainNetwork()">Naučit síť</button>
+    </div>
+    <div>
+        <p>Stav sítě: {{networkStateMessage}}</p>
+        <p>Výsledek odhadu: {{prediction}}</p>
+    </div>
 </div>

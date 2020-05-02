@@ -24,6 +24,7 @@ import { TextContainerComponent } from './text-container/text-container.componen
 import { HttpClientModule } from '@angular/common/http';
 import { GeneticAlgPageComponent } from './genetic-alg-page/genetic-alg-page.component';
 import { NeuralNetPageComponent } from './neural-net-page/neural-net-page.component';
+import { IntroPageComponent } from './intro-page/intro-page.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NeuralNetPageComponent } from './neural-net-page/neural-net-page.compon
     CanvasNeuralNetsComponent,
     TextContainerComponent,
     GeneticAlgPageComponent,
-    NeuralNetPageComponent
+    NeuralNetPageComponent,
+    IntroPageComponent
   ],
   imports: [
     HttpClientModule,

@@ -5,7 +5,7 @@
   <mat-sidenav-content fxLayout="column">
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
     <div fxLayout="column" fxLayoutAlign="none center">
-      <main [id]="mainId">
+      <main>
           <router-outlet></router-outlet> 
       </main>
     </div>

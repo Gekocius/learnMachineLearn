@@ -4,8 +4,8 @@ import { Agent } from "./agent"
 export default class Population{
     private size: number;
     private agents : Array<Agent> = [];
-    private canvasW;
-    private canvasH;
+    private canvasW; // Canvas Width
+    private canvasH; // Canvas Height
     public mutationRate: number;
     public generationCount : number = 0;
 
@@ -15,14 +15,19 @@ export default class Population{
         this.seedPopulation();
         this.calculateFitness();
     }
-
-    public reset() : void{
+    /**
+     * Resets the population object into the random state
+     */
+    public reset(): void{
         this.agents = [];
         this.seedPopulation();
         this.calculateFitness();
     }
 
-    public async run() {
+    /**
+     * Run the algorithm
+     */
+    public async run(): Promise<void> {
         while (!this.targetAchieved()) {       
             let offsprings : Array<Agent> = this.agents[0].breed(this.agents[1]);
             if (this.shouldMutate()) {
@@ -40,9 +45,13 @@ export default class Population{
             }
             await this.sleep(100);
         }
-        console.log(this.generationCount);
     }
 
+    /**
+     * Called by canvas component to set dimensions of canvas element
+     * @param w Canvas width
+     * @param h Canvas height
+     */
     public setCanvasSize(w: number, h: number) : void
     {
         this.canvasW = w;
@@ -57,10 +66,10 @@ export default class Population{
         p.draw = function () {
             let radius = Math.floor(this.canvasW*0.05);
             let xIncrement = Math.floor(this.canvasW/5);
-            let yInceremt = 50;
+            let yInceremt = Math.floor(this.canvasW/6);
             let xStart = Math.floor(this.canvasW/5)
             let x = xStart;
-            let y = 30;
+            let y = Math.floor(this.canvasW*0.05);
             for(let i = 0; i < this.agents.length; i++){
               let genes: string = this.agents[i].genes;
               let r: number = parseInt(genes[0].concat(genes[1]),16);
@@ -86,6 +95,9 @@ export default class Population{
         return new Promise(resolve => setTimeout(resolve, ms));
     };
     
+    /**
+     * Randomly determines if agent should mutate
+     */
     private shouldMutate() : boolean{
         let randomChance: number = Math.round(Math.random() * 100);
         if (randomChance <= this.mutationRate*100) {
@@ -94,6 +106,9 @@ export default class Population{
         return false;
     }
 
+    /**
+     * Determines if the given target - black color - was achieved
+     */
     private targetAchieved() : boolean{
         if (this.agents[0].fitness === 0) {
             return true;
@@ -101,12 +116,18 @@ export default class Population{
         return false;
     }
 
+    /**
+     * Fill population with agents which have random genes resulting into random colors
+     */
     private seedPopulation(): void {
         for (let i = 0; i < this.size; i++) {
             this.agents.push(new Agent());
         }   
     }
 
+    /**
+     * Calculates fitness for all agents in the population
+     */
     private calculateFitness(): void {
         this.agents.forEach(agent => {
             let hexR : number = parseInt(agent.genes.substring(0,2), 16);

@@ -7,6 +7,9 @@ export class Agent{
         }
     }
 
+    /**
+     * Returns random color in hexadecimal string
+     */
     private randomColor() : string
     {
         let letters: string = '0123456789ABCDEF';
@@ -17,6 +20,10 @@ export class Agent{
         return color;
     }
 
+    /**
+     * Cross this agent with the given second agent producing two new offsprings
+     * @param secondAgent Second agent to cross with
+     */
     public breed(secondAgent : Agent) : Array<Agent>
     {
         let newGenes1 : string = this.genes.substring(0,3).concat(secondAgent.genes.substring(3));
@@ -29,6 +36,9 @@ export class Agent{
         return [newAgent1, newAgent2];
     }
 
+    /**
+     * Modify random agent gene by -1. If the chosen gene is at maximum value, overflows back to minimal value.
+     */
     public mutate()
     {
         // Choose random index from 0 to 5
