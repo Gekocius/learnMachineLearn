@@ -1,5 +1,5 @@
 import {create, all} from 'mathjs';
-import Layer from '../neural-nets/layer';
+import Layer from './layer';
 import * as p5 from 'p5';
 import LayerVisual from './layerVisual';
 

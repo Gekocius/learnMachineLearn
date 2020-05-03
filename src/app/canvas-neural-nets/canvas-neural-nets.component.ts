@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import {create, all} from 'mathjs';
-import Network from '../algorhitms/neural-nets/network'
+import Network from '../algorithms/neural-nets/network'
 import * as p5 from 'p5';
 
 const math = create(all, {});

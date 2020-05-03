@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input, AfterViewChecked } from '@angular/core';
 import * as p5 from 'p5';
-import Population from "../algorhitms/genetic-alg/population"
+import Population from "../algorithms/genetic-alg/population"
 
 @Component({
   selector: 'app-canvas',

@@ -53,10 +53,10 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Jako nákladová funkce se pro logistickou regresi nepoužívá střední kvadratická chyba, nýbrž funkce věrohodnosti (z anglického pojmu „likelihood function"). Tato funkce je ještě dále upravena na logaritmickou věrohodnost (z angličtiny log-likelihood). Funkce věrohodnosti a logaritmická funkce věrohodnosti je popsána rovnicí.</p>
 
-<p>$$ \begin{split}
+<p>$$ \begin{align}
 	L_{w,b} := \prod f_{w,b}(x)^{y_i}(1-f_{w,b}(x_i))^{1-y_i} \\
 	\log L_{w,b} := \ln(L_{w,b}) = \sum[y_i\ln f_{w,b}(x) + (1-y_i) \ln(1-f_{w,b}(x)] \\
-	\end{split}
+	\end{align}
 	$$</p>
 
 <p>Optimální hodnota parametrů se opět získává za použití gradient descentu.</p>
