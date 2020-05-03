@@ -1,6 +1,6 @@
 <h1>Neuronové sítě</h1>
 Neuronové sítě jsou jedním z nejrošířenejších algoritmů strojového učení. V dnešním světě jsou defacto základím kamenem celého oboru strojového učení. Podobně jako genetické algoritmy jsou založeny na biologickém základu. V tomto tutoriálu se zaměříme na dopředné neuronové sítě (feedforward neural networks).
-Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná záležitost, ale vše si co možná nejvíc do podrobna vysvětlíme. Nelekejte se toho, že šást začíná lineární a logistickou regresí. Z mého hlediska tyto dva algoritmy dávají neuronové sítě do lepší perspektivy. Veškerý kód k příkladu na konci tohoto tutoriálu je umístěn na <a href="https://www.example.com">GitHubu</a>
+Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná záležitost, ale vše si co možná nejvíc do podrobna vysvětlíme. Nelekejte se toho, že šást začíná lineární a logistickou regresí. Z mého hlediska tyto dva algoritmy dávají neuronové sítě do lepší perspektivy. Veškerý kód k příkladu na konci tohoto tutoriálu je umístěn na <a href="https://github.com/Gekocius/learnMachineLearn/tree/master/src/app/algorhitms/neural-nets">GitHubu</a>
 
 <h2>Lineární regrese</h2>
 
@@ -14,22 +14,22 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Matematicky vyjádřeno nejde o nic jiného než o snahu nalézt ideální rovnici lineární funkce pro daná trénovací data. Algoritmus k tomuto úkolu přistupuje úpravou parametrů v rovnici lineární funkce, kterou můžete vidět níže.</p>
 
-	<p>$$f_{w,b}(x)=wx+b$$</p>
+	<p class="equation">$$f_{w,b}(x)=wx+b$$</p>
 
 <p>Kde w a b (w je často nazýváno jako váha a b jako bias, u neuronových sítí pak překládáno jako práh) jsou reálná čísla, jejichž postupnou úpravou algoritmus dosahuje větší přesnosti v predikci hodnoty závislé proměnné.</p>
 
-<p>Učení algoritmu probíhá skrze minimalizaci tzv. nákladové funkce. Nákladová funkce je ve své podstatě velmi podobná fitness funkci z <a href ="">tutoriálu o genetických algoritmech</a>. Podobně jako fitness funkce vyjadřuje kvalitu daného řešení.</p>
+<p>Učení algoritmu probíhá skrze minimalizaci tzv. nákladové funkce. Nákladová funkce je ve své podstatě velmi podobná fitness funkci z <a href ="./geneticke-algortimy">tutoriálu o genetických algoritmech</a>. Podobně jako fitness funkce vyjadřuje kvalitu daného řešení.</p>
 
 <p>Pro lineární regresy bývá jako nákladová funkce používána střední kvadratická chyba. Ta má následující podobu:</p>
 
-<p>$$\frac{1}{N} \sum_{1\ldots N}^N(y_i - f_{w,b}(x))^2$$</p>
+<p class="equation">$$\frac{1}{N} \sum_{1\ldots N}^N(y_i - f_{w,b}(x))^2$$</p>
 
 <p>Výraz f<sub>w,b</sub>(x<sub>i</sub>) je predikce, kterou učinil model lineární regrese, y<sub>i</sub> je reálná hodnota závislé proměnné, N je počet příkladů, které obsahuje náš trénovací data set.</p>
 
 <p>Pro nalezení optimální hodnoty parametrů za pomocí nákladové funkce se využívá algoritmus nazývaný gradient descent. V češtině jsem se potkal pouze s jedním možným překladem, jako "sestup podle gradientu", který mi přijde poněkud krkolomný. V tutoriálu na celý algoritmus raději odkazuji původním anglickým názvem. Jedná se o cyklický algoritmus pro hledání minima funkce za pomocí gradientu funkce.</p>
 <p>Gradient funkce je zobecnění derivace funkce pro funkce, které mají na svém vstupu více než jeden parametr. Gradient je vektorem parciálních derivací. Získává se tak, že se funkce derivuje vždy pro jeden parametr a ostatní jsou považovány za konstanty. Derivace pod tímto odstavcem ukazují, jak získat jednotlivé elementy vektoru.</p>
 
-<p>$$ \begin{split}
+<p class="equation">$$ \begin{split}
 	g := \frac{1}{N} \sum (y_i - (wx_i + b))^2 \\
 	\frac{\partial g}{\partial w} = \frac{1}{N} \sum -2x_i(y_i - (wx_i + b)) \\
 	\frac{\partial g}{\partial b} = \frac{1}{N} \sum -2(y_i - (wx_i + b))
@@ -38,24 +38,24 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Jakmile je k dispozici gradient nákladové funkce dalším krokem je samotný iterativní proces, kterým se model lineární regrese učí. Každý průběh cyklu algoritmu se nazývá epocha. V každé epoše se parciální derivace příslušného parametru násobí číslem, které se nazývá míra učení, v angličtině často uvidíte "learning rate". Míra učení je konstantní číslo vybrané před zahájením algoritmu. Používají se velmi malá čísla, například 0.001. Po vynásobení mírou učení je výsledná hodnota odečtena od hodnoty příslušného parametru a vzniklá hodnota se stává novou hodnotou parametru. Viz rovnice pod odstavcem.</p>
 
-	<p>$$w \gets w-\alpha\frac{\partial g}{\partial w}$$</p>
+	<p class="equation">$$w \gets w-\alpha\frac{\partial g}{\partial w}$$</p>
 
 
 <h2>Logistická regrese</h2>
 
 <p>Logistická regrese na rozdíl od lineární regrese není algoritmem prediktivním, ale klasifikačním. To znamená, že problém, který řeší, je zařazení vstupních dat do jedné nebo více tříd. Pro naše účely jsou uvažovány pouze dvě třídy, data mohou nabývat hodnoty 0 nebo 1. Výstupem logistické regrese je číslo mezi 0 a 1, které vyjadřuje pravděpodobnost, se kterou vstupní data patří do dané třídy. Stejně jako u lineární regrese se algoritmus snaží najít optimální parametry funkce. Namísto lineární funkce se používá funkce logistická, konkrétně standardní logistická funkce, také nazývaná jako sigmoid funkce.</p>
 
-	<p>$$f(x) = \frac{1}{1+e^{-x}}$$</p>
+	<p class="equation">$$f(x) = \frac{1}{1+e^{-x}}$$</p>
 
 <p>Písmeno e je v tomto případě základ přirozeného logaritmu známý také jako Eulerovo číslo. Model logistické regrese k tomuto vzorci opět přidává dva parametry w a b.</p>
 
-	<p>$$f_{w,b}(x) = \frac{1}{1+e^{-(wx+b)}}$$</p>
+	<p class="equation">$$f_{w,b}(x) = \frac{1}{1+e^{-(wx+b)}}$$</p>
 
 <p>Jako nákladová funkce se pro logistickou regresi nepoužívá střední kvadratická chyba, nýbrž funkce věrohodnosti (z anglického pojmu „likelihood function"). Tato funkce je ještě dále upravena na logaritmickou věrohodnost (z angličtiny log-likelihood). Funkce věrohodnosti a logaritmická funkce věrohodnosti je popsána rovnicí.</p>
 
-<p>$$ \begin{align}
+<p class="equation">$$ \begin{align}
 	L_{w,b} := \prod f_{w,b}(x)^{y_i}(1-f_{w,b}(x_i))^{1-y_i} \\
-	\log L_{w,b} := \ln(L_{w,b}) = \sum[y_i\ln f_{w,b}(x) + (1-y_i) \ln(1-f_{w,b}(x)] \\
+	\log L_{w,b} = \sum[y_i\ln f_{w,b}(x) + (1-y_i) \ln(1-f_{w,b}(x)] \\
 	\end{align}
 	$$</p>
 
@@ -67,7 +67,7 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Neuron se skládá ze spojení s předchozími neurony, vah na těchto spojeních, aktivační funkce a prahu. Výjimkou jsou vstupní neurony, které logicky jakožto vstupní vrstva nemají žádná spojení na vrstvu předchozí a tím pádem ani váhy a prahy. Funkce neuronu je relativně jednoduchá. Neuron vezme výstupy předchozích neuronů (těm se říká aktivace) vynásobí je příslušnými vahami u každého spojení, jednotlivé výsledky sečte a nakonec přičte práh. Na výsledek célé této operace poté aplikuje aktivační funkci. Vícevrstvý perceptron je schopen řešit problémy jak klasifikační tak regresní, záleží na volbě aktivační funkce a také podobě datasetu. Pro účely vysvětlení použijeme funkci sigmoid z logistické regrese. Aktivačních funkcí existuje celá řada, můžete potkat například ReLU a její úpravy (SeLU, Leaky ReLU), TanH, ArcTan, softmax a další a další. </p>
 
-<img src="./assets/tutorial-texts/images/neuron.png"> 
+<img class="resizable" src="./assets/tutorial-texts/images/neuron.png"> 
 
 <p>Na sigmoid funkci je velice příjemná její derivace, jelikož je velice triviální. Derivace nás od tohoto odstavce budou provázet až do konce, jsou hlavním prostředkem jak učit neuronovou síť. Na začátku učení jsou všechny váhy a prahy náhodné, tím pádem jakékoliv predikce/klasifikace učiněné sítí jsou taktéž náhodné. Změnou vah a prahů postupně docílíme přesnějšího modelu. Pro učení sítě se opět používá nákladová funkce spolu s gradient descentem podobně jako tomu bylo u regresních algoritmů. Celý proces se pak nazývá backpropagation. Jako nákladovou funkci použijeme střední kvadratickou chybu střední (viz vzorec 2). Střední kvadratická chyba se opět dá velmi snadno zderivovat.</p>
 
@@ -75,27 +75,27 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Úprava vah opět probíhá skrze gradient descent, úplně stejně jako u lineární a logistické regrese, jenom namísto dvou parametrů jich upravujeme daleko více. Větší počet parametrů a hlavně také tvar neuronové sítě když je vyjádřena jako matematická funkce (neuronová síť je zanořená funkce, viz vzorec 8) je motivací pro backpropagation algoritmus. Bylo by samozřejmě možné vypočítat gradient celé funkce a dle něj následně upravovat váhy, ale to je pro větší sítě výpočetně náročné. Toto je možné předvést na příkladu.</p>
 
-<p>$$g = f_n(f_{n-1}(\ldots f(x) \ldots)) $$</p>
-<p>$$f = \sigma(\sigma(xw_1 + b_2) * w_3 + \sigma(xw_2 + b_3) * w_4 + b_4) $$</p>
+<p class="equation">$$g = f_n(f_{n-1}(\ldots f(x) \ldots)) $$</p>
+<p class="equation">$$f = \sigma(\sigma(xw_1 + b_2) * w_3 + \sigma(xw_2 + b_3) * w_4 + b_4) $$</p>
 
  
-<img src="./assets/tutorial-texts/images/path1046-5-9.png">
+<img class="resizable" src="./assets/tutorial-texts/images/path1046-5-9.png">
 
 <p>Vzorec 8 je neuronová síť vyjádřená zanořenými funkcemi. Jedná se o obecný vzorec. Na obrázku je jednoduchá neuronová síť v grafické podobě. Každá vrstva vyjma vrstvy vstupní odpovídá jedné zanořené funkci. Neuronová síť na obrázku se dá vyjádřit vzorcem  9. Řecké písmeno σ (malá sigma) představuje aktivační funkci a každý neuron má přiřazeny prahy značené písmenem b. I na takto jednoduché neuronové síti je dohromady osm dimenzí (čtyři prahy a čtyři váhy), které ovlivňují hodnotu nákladové funkce.</p>
 
-<p>$$\sigma'(\sigma(xw_1 + b_2)w_3+\sigma(xw_2+b_3)w_4+b_4)xw_3\sigma'(xw_1+b_2)$$</p>
+<p class="equation">$$\sigma'(\sigma(xw_1 + b_2)w_3+\sigma(xw_2+b_3)w_4+b_4)xw_3\sigma'(xw_1+b_2)$$</p>
 
 <p>Rovnice 10 je parciální derivací pro váhu w1, takovýchto rovnic bychom museli vypočítat ještě dalších sedm, nemluvě o tom, že v rovnici chybí derivace aktivační funkce. Pro velké neuronové sítě se pak dostáváme velice snadno do tisíců. I když bychom měli rovnice gradientu nákladové funkce pro všechny váhy a prahy připravené předem, stále je nutné na jejich základě zjistit konkrétní hodnotu a provést úpravu všech vah po každé epoše.</p>
 
 <p>Zde konečně přichází na řadu backpropagation, která je optimalizací tohoto procesu. Algoritmus zavádí mezihodnotu označovanou jako δ (malá delta) pro každý neuron. Za pomocí této mezihodnoty je pak možné rychle spočítat parciální derivaci pro jakoukoliv váhu nebo práh. Následující vzorce představují výpočet δ a parciálních derivací pro váhy a prahy. </p>
 
-	<p>$$\delta^L = \nabla_a C \odot \sigma'(z^L) $$</p>
+	<p class="equation">$$\delta^L = \nabla_a C \odot \sigma'(z^L) $$</p>
 
-	<p>$$\delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l) $$</p>
+	<p class="equation">$$\delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l) $$</p>
 
-	<p>$$\frac{\partial C}{\partial b_j^l} = \delta^l_j $$</p>
+	<p class="equation">$$\frac{\partial C}{\partial b_j^l} = \delta^l_j $$</p>
 
-	<p>$$\frac{\partial C}{\partial w_{jk}^l} = a^{l-1}_k \delta_j^l $$</p>
+	<p class="equation">$$\frac{\partial C}{\partial w_{jk}^l} = a^{l-1}_k \delta_j^l $$</p>
 
 <p>Z výše uvedených vzorců je patrné, že δ má dva různé způsoby výpočtu. Vzorec 11 je výpočet δ ve výstupní vrstvě neuronové sítě, poslední vrstva se značí velkým písmenem L. Výraz &#8711;<sub>a</sub>C je vektorem parciálních derivací nákladové funkce vzhledem k aktivacím neuronů ve výstupní vrstvě sítě. Jednoduše je toto si možno představit jako seznam &#8706; C/ &#8706; a<sub>j</sub><sup>L</sup>} , kde horní index L opět značí poslední vrstvu a dolní index j je číslo neuronu ve vrstvě. Symbol ⊙ je tzv. Hadamardův produkt. Hadamardův produkt je operace násobení stejně velkých vektorů nebo maticí podle jejich jednotlivých elementů . Například, pokud bychom měli vektor [1,2] a [3,4] výsledkem Hadamardova produktu je vektor [3,8]. Posledním výrazem ve vzorci je &sigma; '(z<sup>L</sup>), je to vektor výsledků derivované aktivační funkce, která jako parametr přijímá vektor z<sup>L</sup>. Výraz z byl definován na obrázku neuronu výše v tutoriálu, jedná se o sumu vážených aktivací a prahu, předtím, než je na ni aplikována aktivační funkce. Zde se opět použijí všechny tyto sumy z poslední vrstvy. Výsledkem je vektor.</p>
 
@@ -103,36 +103,35 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Vzorce 13 a 14 jsou už poměrně přímočaré, udávají hodnotu parciální derivace nákladové funkce vzhledem k jednotlivým vahám a prahům jednotlivé prahy a váhy v síti. Co na těchto dvou vzorcích může být matoucí jsou indexy. Prahy jsou se svým dolním a horním indexem jednoznačné, horní index l je číslo vrstvy v síti, dolní index j pak číslo neuronu, ke kterému váha náleží. U vah se však spodní indexy nachází dva, j a k. Jedná se o způsob, jak vyjádřit, že váha leží mezi dvěma neurony, j je číslo neuronu na vrstvě l, k je číslo neuronu na vrstvě l-1. Nejlépe se toto popisuje vizuálně:</p>
 
-<img src="./assets/tutorial-texts/images/vahy.png">
+<img class="resizable" src="./assets/tutorial-texts/images/vahy.png">
 
 <p>Backpropagation algoritmus by bylo možné nyní uzavřít a přesunout se tak na implementaci ukázky. Nicméně celý proces a vzorce s mezihodnotou δ vypadají jako černá skříňka což by vám mnoho neřeklo.</p>
 <p>Položme si tedy otázku, jak bychom mohli od základu na takovéto rovnice přijít, jaký je jejich důkaz, že skutečně fungují a myšlenky za nimi stojící.</p>
 <p>Pro pochopení myšlenek za backpropagation algoritmem je nutné znát řetízkové pravidlo derivací. Jedná se o základní pravidlo derivací složených funkcí, pro zopakování je uvedeno vzorcem 15 v Lagrangově notaci a vzorcem 16 v Leibnizově notaci .</p>
 
-	<p>$$g(f(x))' = g'(f(x))f'(x)$$</p>
+	<p class="equation">$$g(f(x))' = g'(f(x))f'(x)$$</p>
 
-	<p>$$\frac{dy}{dx} = \frac{dy}{dy}\frac{du}{dx}$$</p>
+	<p class="equation">$$\frac{dy}{dx} = \frac{dy}{dy}\frac{du}{dx}$$</p>
 
 <p>Oba dva vzorce vyjadřují to samé, jen pokaždé trochu jinak. Základní myšlenka je ta, že derivace dvou vnořených funkcí g a f je rovna derivaci funkci vnější násobeno derivací funkce vnitřní. Leibnizova notace k řetízkovému pravidlu přistupuje tak, že zavádí proměnné y a u, které jsou výstupem jednotlivých funkcí. Tato notace se pak dá přečíst jako „derivace y ve vztahu k x je rovna derivaci y ve vztahu k u násobeno derivací u ve vztahu k x“. Leibnizova notace je pro vysvětlení backpropagation lepší, zřejmé to bude dále v tomtu tutoriálu. Dalším nástrojem potřebnému k vysvětlení jsou tzv. výpočetní grafy.</p>
 
-<p>Výpočetní grafy jsou způsob znázornění matematických výrazů. Každou funkci z výrazu převádíme na uzel grafu. Matematické grafy umožňují znázornit, jak jsou jednotlivé funkce ve výrazu závislé na proměnných. Výpočetní grafy se opět nejlépe vysvětlují vizuálně, viz obrázek</p>
+<p>Výpočetní grafy jsou způsob znázornění matematických výrazů. Každou funkci z výrazu převádíme na uzel grafu. Matematické grafy umožňují znázornit, jak jsou jednotlivé funkce ve výrazu závislé na proměnných. Výpočetní grafy se opět nejlépe vysvětlují vizuálně, viz obrázek (můžete si také přečíst rozsáhlé <a href="https://colah.github.io/posts/2015-08-Backprop/">vysvětlení</a>).</p>
 
-<img src="">
-<p>Obrázek 1.4 - Výpočetní graf (zdroj: )</p>
+<img class="resizable" src="https://colah.github.io/posts/2015-08-Backprop/img/tree-def.png">
 
 <p>Obrázek ukazuje výpočetní graf výrazu e = (a+b) * (b+1). Každé funkci ve výrazu je přiřazena proměnná. Graf pak velmi přehledně znázorňuje jednotlivé závislosti výrazu na vstupních proměnných a přes které cesty je ovlivňují. Tento postup je možné provést s parciálními derivacemi a aplikovat jej na nákladovou funkci neuronové sítě. Klinutím na obrázek se dostanete na více obsáhlé vysvětlení výpočetních grafů v angličitně.</p>
 
 <p>Pro znázornění je použita velmi jednoduchá plochá neuronová síť o čtyřech neuronech.</p>
 
-<img src="./assets/tutorial-texts/images/backprop.png">
+<img class="resizable" src="./assets/tutorial-texts/images/backprop.png">
 
 <p>Výpočetní graf v levé části obrázku zachycuje celou neuronovou síť i s její nákladovou funkcí. Z tohoto grafu je jednoduše poznat, skrze které cesty je nákladová funkce c závislá na různých vahách a prazích. Zde už přichází na řadu parciální derivace a Leibnizova notace. Parciální derivace se zapisují stylizovaným písmenem d. Nyní po grafu půjdeme za pomocí řetízkového pravidla postupně zpátky. Chceme zjistit parciální derivaci pro váhu w4.</p>
 
-	<p>$$\frac{\partial c }{\partial w_4} = \frac{\partial c }{\partial a_4} \frac{\partial a_4 }{\partial z_4} \frac{\partial z_4 }{\partial w_4}$$</p>
+	<p class="equation">$$\frac{\partial c }{\partial w_4} = \frac{\partial c }{\partial a_4} \frac{\partial a_4 }{\partial z_4} \frac{\partial z_4 }{\partial w_4}$$</p>
 
 <p>Předchozí rovnici je možno číst jako „parciální derivace c ve vztahu k w4 je rovna parciální derivaci c ve vztahu k a4 násobeno parciální derivaci a4 ve vztahu k z4 násobeno parciální derivací z4 ve vztahu w4“. Takto postupně je možné se dostat z nákladové funkce c a její primární závislosti a4 až na požadovanou váhu w4. Tento postup je možný opakovat pro celou síť a je možné se tak dostat až k váze w2 jak je možno vidět na rovnicích níže.</p>
 
-	<p>$$
+	<p class="equation">$$
 	\begin{split}
 	\frac{\partial c }{\partial w_3} = \frac{\partial c }{\partial a_4} \frac{\partial a_4 }{\partial z_4} \frac{\partial z_4 }{\partial a_3} \frac{\partial a_3 }{\partial z_3} \frac{\partial z_3 }{\partial w_3} \\
 	\frac{\partial c }{\partial w_2} = \frac{\partial c }{\partial a_4} \frac{\partial a_4 }{\partial z_4} \frac{\partial z_4 }{\partial a_3} \frac{\partial a_3 }{\partial z_3} \frac{\partial z_3 }{\partial a_2} \frac{\partial a_2 }{\partial w_2}
@@ -141,23 +140,23 @@ Upozorňuji, že neuronové sítě jsou poměrně matematicky náročná zálež
 
 <p>Na těchto rovnicích je možné si všimnout opakujícího se vzoru. Rovnice vždy začínají výrazem &part; c / &part; a<sub>4</sub> &part; a<sub>4</sub>/ &part; z<sub>4</sub> a tento výraz se pro každou vrstvu opakuje vícekrát po sobě, jenom s jinými indexy. Co kdyby tento výraz byl nazván δ? Tím se dostaneme u poslední vrstvy k rovnici 19.</p>
 
-	<p>$$\delta^L = \frac{\partial c }{\partial a_4}\frac{\partial a_4 }{\partial z_4}$$</p>
+	<p class="equation">$$\delta^L = \frac{\partial c }{\partial a_4}\frac{\partial a_4 }{\partial z_4}$$</p>
 
 <p>V této rovnici se dá parciální derivace na pravé straně přepsat jako σ‘(z<sub>4</sub>), na což se dá přijít i logickým odvozením, jelikož víme, že a4 = σ(z4), tudíž parciální derivace (které v tomto případě není ani tolika parciální jako spíše úplná) je derivace aktivační funkce σ zapisována jako σ‘. Celý tento vzorec udává však derivaci ve vztahu pouze k jedné aktivaci. Neuronová síť z obrázku jich více nemá, ale je potřeba mít obecný vzorec pro více aktivací. Vzhledem k tomu, že pořád děláme to samé a jednotlivé výsledky na větších sítích dohromady tvoří matici (nebo vektor), stačí oba dva výrazy v rovnici přepsat do maticové podoby a dostáváme rovnici 11.</p>
 
 <p>Pro každou další vrstvu je nutné přidat její výraz, dalo by se říct je že potřeba k původní δ přidat δ dané vrstvy. Při substituci první z rovnic 18 za pomocí rovnice 19 a vynechání poslední parciální derivace vztahující se k váze lze získat rovnici 20</p>
 
-	<p>$$\delta^l = \delta^L \frac{\partial z_4 }{\partial a_3}\frac{\partial a_3 }{\partial z_3}$$</p>
+	<p class="equation">$$\delta^l = \delta^L \frac{\partial z_4 }{\partial a_3}\frac{\partial a_3 }{\partial z_3}$$</p>
 
 <p>Do rovnice 20 pak stačí dosadit výsledky parciálních derivací. Výsledek parciální derivace uprostřed je w4 a levé parciální derivace je σ‘(z3). Po dosazení a přerovnání jednotlivých elementů tak vznikne rovnice 21</p>
 
-	<p>$$\delta^l = w_4*\delta^L*\sigma'(z_3) $$</p>
+	<p class="equation">$$\delta^l = w_4*\delta^L*\sigma'(z_3) $$</p>
 
 <p>Tato rovnice už je velice podobná rovnici 12. Opět se jedná o výpočet pouze jednoho elementu matice, avšak stále není kompletní. Rovnice by totiž platila pouze v případě, kdy neuron má jednu jedinou váhu. Pro zobecnění pro vícero vah je ještě potřeba přidat do rovnice sumu pravého výrazu pro k vah. Druhou možností je samozřejmě používat maticovou matematiku. V původní rovnici 12 se nachází transponovaná matice vah w. Transponování je provedeno kvůli zajištění správnosti výsledku vzhledem k pravidlům násobení matic a vektorů.</p>
 
 <p>K posledním dvěma rovnicím se opět dá dojít skrze derivace a řetízkové pravidlo. Rovnice 13 říká, že parciální derivace prahu neuronu j ve vrstvě l je roven δ daného neuronu. Toto je možné dokázat například za pomocí rovnice 17, je nutné ji však upravit na výpočet prahu b4, namísto váhy w4. Jedná se o velmi triviální úpravu, jelikož práh b4 je opět závislý na výrazu z4. Výsledkem je rovnice 22.</p>
 
-	<p>$$ \frac{\partial c }{\partial b_4} =  \frac{\partial c }{\partial a_4}  \frac{\partial a_4 }{\partial z_4}  \frac{\partial z_4 }{\partial b_4} $$</p>
+	<p class="equation">$$ \frac{\partial c }{\partial b_4} =  \frac{\partial c }{\partial a_4}  \frac{\partial a_4 }{\partial z_4}  \frac{\partial z_4 }{\partial b_4} $$</p>
 
 <p>Z předchozích rovnic víme, že první dvě derivace dávají dohromady δ. Aby platila rovnice 17 je nutné, aby derivace &part; z<sub>4</sub> / &part; b<sub>4</sub> byla rovna jedné. Po derivaci výrazu z4 vzhledem k b<sub>4</sub> se ukáže, že toto platí a výsledek je skutečně jedna. Poslední rovnice backpropagation algoritmu 14 pak uvádí, že parciální derivace váhy mezi neurony j a k je rovna aktivaci neuronu k, který leží v předchozí vrstvě, násobeno δ neuronu v aktuální vrstvě. Opět je možno použít rovnici 17 pro dokázání platnosti. Podmínkou pro platnost je, aby výraz &part; z<sub>4</sub> / &part; w<sub>4</sub> byl roven aktivaci z předchozí vrstvy. Výraz z<sub>4</sub> tuto aktivaci obsahuje a výsledek derivace ve vztahu k w4 je skutečně samotná aktivace.</p>
 

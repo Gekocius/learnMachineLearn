@@ -1,13 +1,13 @@
-<div fxFlex fxLayout="column" class="example">
+<div fxFlex="1 1 auto" fxLayout="column">
     <div fxFlex="1 1 auto" id="p5sketch"></div>
-    <div fxFlex="1 1 100%" class="control-panel">
+    <div fxFlex="1 1 auto" class="control-panel">
         <mat-form-field>
             <mat-label>x<sub>1</sub></mat-label>
-            <input matInput min="0" max="1" step="1" type="number" (input)="updateX1($event)">
+            <input matInput min="0" max="1" step="1" type="number" value="0" (input)="updateX1($event)">
         </mat-form-field>
         <mat-form-field>
             <mat-label>x<sub>2</sub></mat-label>
-            <input matInput min="0" max="1" step="1" type="number" (input)="updateX2($event)">
+            <input matInput min="0" max="1" step="1" type="number" value="0" (input)="updateX2($event)">
         </mat-form-field>
         <button mat-raised-button (click)="predict()">Provést odhad</button>
         <button mat-raised-button (click)="trainNetwork()">Naučit síť</button>
